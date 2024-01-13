@@ -71,6 +71,14 @@
   text-align: center;
 }
 
+.code-input {
+  padding: 5px;
+  margin: 20px 0;
+  width: 50px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
 /* Valid message style */
 .valid-message {
   color: green;

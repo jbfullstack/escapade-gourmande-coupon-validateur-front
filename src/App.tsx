@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom'; // Import necessary components
+import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
 import './App.css';
 import axios from 'axios';
 
 function VoucherComponent() {
   const { voucherId } = useParams<{ voucherId: string }>();
-  const [responseValue, setResponseValue] = useState<string>();
+  const [responseValue, setResponseValue] = useState<string | null>(null);
   const [responseResponded, setResponseResponded] = useState<boolean>(false);
+  const [codeValue, setCodeValue] = useState<string>('');
+  const [isCodeCorrect, setIsCodeCorrect] = useState<boolean>(false);
+  const code_validator = '1235';
 
   const BACK_URL = `https://escapade-gourmande-le-jeu-back.vercel.app/validate-voucher/${voucherId}`;
 
@@ -21,9 +24,19 @@ function VoucherComponent() {
     }
   };
 
+  const handleCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    setCodeValue(newValue);
+
+    if (newValue === code_validator) {
+      setIsCodeCorrect(true);
+    } else {
+      setIsCodeCorrect(false);
+    }
+  };
+
   return (
     <div className="voucher-container">
-      {/* <label htmlFor="voucher-id">Voucher ID :</label> */}
       <input
         type="text"
         id="voucher-id"
@@ -32,9 +45,24 @@ function VoucherComponent() {
         className="voucher-input"
         disabled={true}
       />
-      <button onClick={handleButtonClick} className={responseResponded ? 'disabled voucher-button' : 'voucher-button'} disabled={responseResponded}  >
+
+      <input
+        type="text"
+        id="code-input"
+        value={codeValue}
+        onChange={handleCodeChange}
+        placeholder="Code"
+        className="code-input"
+      />
+
+      <button
+        onClick={handleButtonClick}
+        className={responseResponded || !isCodeCorrect ? 'disabled voucher-button' : 'voucher-button'}
+        disabled={responseResponded || !isCodeCorrect}
+      >
         Valider le coupon
       </button>
+
       {responseResponded && (
         <div>
           <h2 className="voucher-result">
