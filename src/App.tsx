@@ -32,7 +32,7 @@ function VoucherComponent() {
         className="voucher-input"
         disabled={true}
       />
-      <button onClick={handleButtonClick} className="voucher-button" disabled={responseResponded}>
+      <button onClick={handleButtonClick} className={responseResponded ? 'disabled voucher-button' : 'voucher-button'} disabled={responseResponded}  >
         Valider le coupon
       </button>
       {responseResponded && (

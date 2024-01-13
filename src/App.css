@@ -81,6 +81,12 @@
   color: red;
 }
 
+button:disabled {
+  background-color: #ddd; /* Couleur de fond grise */
+  color: #888; /* Couleur du texte grise */
+  cursor: not-allowed; /* Curseur non autorisé */
+}
+
 /* App.css */
 
 
